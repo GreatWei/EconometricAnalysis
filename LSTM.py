@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from pandas import Timestamp
 
 from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, LSTM
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, LSTM
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler(feature_range=(0, 1))
 
 # read the file
-df = pd.read_csv('NSE-TATAGLOBAL(1).csv')
+df = pd.read_csv('NSE-TATAGLOBAL.csv')
 
 # print the head
 df.head()
@@ -90,3 +90,15 @@ X_test = np.array(X_test)
 X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
 closing_price = model.predict(X_test)
 closing_price = scaler.inverse_transform(closing_price)
+
+rms = np.sqrt(np.mean(np.power((valid - closing_price), 2)))
+rms
+
+11.772259608962642
+# for plotting
+train = new_data[:987]
+valid = new_data[987:]
+valid['Predictions'] = closing_price
+plt.plot(train['Close'])
+plt.plot(valid[['Close', 'Predictions']])
+plt.show()
