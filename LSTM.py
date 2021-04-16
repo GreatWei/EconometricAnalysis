@@ -52,10 +52,11 @@ new_data.drop('Date', axis=1, inplace=True)
 
 # creating train and test sets
 dataset = new_data.values
-
+print(dataset)
 train = dataset[0:987, :]
+print(len(train))
 valid = dataset[987:, :]
-
+print(len(valid))
 # converting dataset into x_train and y_train
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_data = scaler.fit_transform(dataset)
@@ -99,6 +100,6 @@ rms
 train = new_data[:987]
 valid = new_data[987:]
 valid['Predictions'] = closing_price
-plt.plot(train['Close'])
+# plt.plot(train['Close'])
 plt.plot(valid[['Close', 'Predictions']])
 plt.show()
