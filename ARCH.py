@@ -58,17 +58,17 @@ print(res.params)
 ini = res.resid[-8:]
 a = np.array(res.params[1:9])
 w = a[::1]
-for i in range(10):
-    new = test[i]-(res.params[0]+w.dot(ini[-8:]))
-    ini = np.append(ini,new)
-print(len(ini))
-
-at_pre=ini[-10:]
-at_pre2=at_pre**2
-#print(at_pre2)
-ini2 = res.conditional_volatility[-2:]
-for i in range(10):
-    new = 0.
+# for i in range(10):
+#     new = test[i]-(res.params[0]+w.dot(ini[-8:]))
+#     ini = np.append(ini,new)
+# print(len(ini))
+#
+# at_pre=ini[-10:]
+# at_pre2=at_pre**2
+# #print(at_pre2)
+# ini2 = res.conditional_volatility[-2:]
+# for i in range(10):
+#     new = 0.
 
 
 plt.show()
