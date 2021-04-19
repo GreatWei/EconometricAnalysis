@@ -34,10 +34,10 @@ def trainModel(x_train, y_train):
     return model
 
 
-def predictval(model, original_data ,leng, scaler):
-    all_closing_price =[]
-    for i in range(0,leng):
-        inputs=scaler.transform(original_data)
+def predictval(model, original_data, leng, scaler):
+    all_closing_price = []
+    for i in range(0, leng):
+        inputs = scaler.transform(original_data)
         X_test = []
         X_test.append(inputs)
         X_test = np.array(X_test)
@@ -47,9 +47,10 @@ def predictval(model, original_data ,leng, scaler):
         all_closing_price.append(tmp)
         original_data = np.append(original_data, tmp)
         original_data = original_data.reshape(-1, 1)
-        original_data = original_data[1:,]
+        original_data = original_data[1:, ]
 
     return np.array(all_closing_price)
+
 
 scaler = MinMaxScaler(feature_range=(0, 1))
 
