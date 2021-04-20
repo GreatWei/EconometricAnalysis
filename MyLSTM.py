@@ -36,20 +36,24 @@ def trainModel(x_train, y_train):
 
 def predictval(model, original_data, leng, scaler):
     all_closing_price = []
+    original_data_cp = original_data
     for i in range(0, leng):
-        inputs = scaler.transform(original_data)
+        # print("i:",i)
         X_test = []
-        X_test.append(inputs[i+60,0])
+        inputs = scaler.transform(original_data_cp)
+        # print(inputs.shape)
+        for j in range (0,i+1):
+            X_test.append(inputs[j:(j + 60), 0])
         X_test = np.array(X_test)
+        print(X_test.shape)
         X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
         closing_price = model.predict(X_test)
         tmp = scaler.inverse_transform(closing_price)
-        all_closing_price.append(tmp)
-        original_data = np.append(original_data, tmp)
-        original_data = original_data.reshape(-1, 1)
+        all_closing_price = tmp
+        original_data_cp = np.append(original_data, tmp)
+        original_data_cp = original_data_cp.reshape(-1, 1)
 
-
-    return np.array(all_closing_price)
+    return all_closing_price
 
 
 scaler = MinMaxScaler(feature_range=(0, 1))
@@ -113,7 +117,13 @@ print("input start:", len(new_data) - len(valid) - 60)
 
 inputs = new_data[len(new_data) - len(valid) - 60:].values
 inputs = inputs.reshape(-1, 1)
+print("inputs shape:", inputs.shape)
+# print("inputs shape:",inputs)
+original_data = inputs[0:60]
+print("original_data:", original_data.shape)
+# print("original_data:",original_data)
 inputs = scaler.transform(inputs)
+leng = inputs.shape[0] - 60
 print("X_test===================================")
 X_test = []
 print("input :", inputs.shape)
@@ -134,19 +144,28 @@ print("closing_price===========================================")
 print(X_test.shape)
 
 model = trainModel(x_train, y_train)
+my_closing_price = predictval(model, original_data, leng, scaler)
+my_closing_price = np.array(my_closing_price)
+# my_closing_price = my_closing_price.reshape(-1, 1)
+print(my_closing_price)
 closing_price = model.predict(X_test)
+
 closing_price = np.array(closing_price)
-print(closing_price[0][0])
-print(closing_price.shape)
+print(closing_price)
+
 print("===========================================")
 closing_price = scaler.inverse_transform(closing_price)
+# my_closing_price = scaler.inverse_transform(my_closing_price)
 
 # for plotting
 train = new_data[:987]
 valid = new_data[987:987 + len(closing_price)]
 valid['Predictions'] = closing_price
+valid['MyPredictions'] = my_closing_price
 # valid['MyPredictions'] = myclosing_price
 # plt.plot(new_data,label='new_data')
+print("======================last=====================")
+print("valid:", valid)
 ax = plt.gca()
 from matplotlib.dates import AutoDateLocator, DateFormatter, DayLocator
 
@@ -166,9 +185,10 @@ alldays = DayLocator()  # 主刻度为每天
 ax.xaxis.set_major_locator(alldays)
 yearsFmt = DateFormatter('%Y-%m-%d')
 ax.xaxis.set_major_formatter(yearsFmt)
-print("train.index:", train.index)
-print("valid.index:", valid.index)
+# print("train.index:", train.index)
+# print("valid.index:", valid.index)
 plt.plot(valid['Close'], label='Close')
 plt.plot(valid['Predictions'], label='Predictions')
+plt.plot(valid['MyPredictions'], label='MyPredictions')
 plt.legend(loc='best')
 plt.show()

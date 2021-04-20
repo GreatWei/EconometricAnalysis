@@ -93,7 +93,7 @@ X_test = np.array(X_test)
 print(X_test.shape)
 print("X_test===================================")
 X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
-# print(X_test)
+print("X_test:",X_test)
 print(X_test.shape)
 # print(X_test[0].shape)
 
