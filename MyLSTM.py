@@ -45,7 +45,7 @@ def predictval(model, original_data, leng, scaler):
         for j in range (0,i+1):
             X_test.append(inputs[j:(j + 60), 0])
         X_test = np.array(X_test)
-        print(X_test.shape)
+        # print(X_test.shape)
         X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
         closing_price = model.predict(X_test)
         tmp = scaler.inverse_transform(closing_price)
