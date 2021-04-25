@@ -30,7 +30,7 @@ def trainModel(x_train, y_train):
     model.add(Dense(1))
 
     model.compile(loss='mean_squared_error', optimizer='adam')
-    model.fit(x_train, y_train, epochs=1, batch_size=1, verbose=2)
+    model.fit(x_train, y_train, epochs=3, batch_size=3, verbose=2)
     return model
 
 
