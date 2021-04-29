@@ -29,8 +29,8 @@ def trainModel(x_train, y_train):
     # model.add(LSTM(units=150))
     # model.add(LSTM(units=270, return_sequences=True, input_shape=(x_train.shape[1], 7)))
     # model.add(LSTM(units=270))
-    model.add(LSTM(units=120, return_sequences=True, input_shape=(x_train.shape[1], 7)))
-    model.add(LSTM(units=120))
+    model.add(LSTM(units=92, return_sequences=True, input_shape=(x_train.shape[1], 7)))
+    model.add(LSTM(units=92))
     model.add(Dense(7))
 
     model.compile(loss='mean_squared_error', optimizer='adam')
@@ -40,7 +40,7 @@ def trainModel(x_train, y_train):
     # epochs=9, batch_size=13
     # epochs=9, batch_size=11
     # epochs=10, batch_size=11
-    model.fit(x_train, y_train, epochs=16, batch_size=48, verbose=2)
+    model.fit(x_train, y_train, epochs=10, batch_size=11, verbose=2)
     # model.save();
     print(model.summary())
     return model
@@ -124,7 +124,7 @@ train = data[:1500]['Close']
 valid = data[1500:1500 + len(closing_price)]
 valid['Predictions'] = closing_price[:, 3]
 valid['MyPredictions'] = my_closing_price[:, 3]
-# plt.plot(train, label='train_Close')
+plt.plot(train, label='train_Close')
 plt.plot(valid['Close'], label='Close')
 plt.plot(valid['Predictions'], label='Predictions')
 plt.plot(valid['MyPredictions'], label='MyPredictions')
