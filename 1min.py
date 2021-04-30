@@ -133,32 +133,18 @@ plt.plot(valid['Predictions'], label='Predictions')
 # plt.show()
 
 
-def My(x_train, y_train, X_test,original_data):
-    # create and fit the LSTM network
-    for units in range(130, 200):
-        model = trainModel(x_train, y_train, units)
+def My(x_train1, y_train1, X_test1, original_data1):
 
-        my_closing_price = predictval(model, original_data, leng, scaler)
-        my_closing_price = np.array(my_closing_price)
-        print("closing_price===========================================")
-        print(X_test.shape)
-
-        # closing_price = model.predict(X_test)
-        # closing_price = np.array(closing_price)
-        # closing_price = scaler.inverse_transform(closing_price)
-
-        # print("closing_price",closing_price)
-        # print("closing_price",closing_price[:,3])
-
-        # train = data[:1500]['Close']
-        valid = data[1500:1500 + len(my_closing_price)]
-        # valid['Predictions'] = closing_price[:, 3]
-        valid['MyPredictions'] = my_closing_price[:, 3]
-        # plt.plot(train, label='train_Close')
-        # plt.plot(valid['Close'], label='Close')
-        # plt.plot(valid['Predictions'], label='Predictions')
-        plt.plot(valid['MyPredictions'], label=('MyPredictions' + str(units)))
-        plt.legend(loc='best')
+    for units in range(120, 129):
+        for epochs in range(7,33):
+            for batch_size in range(11,33):
+                model1 = trainModel(x_train1, y_train1, units)
+                my_closing_price = predictval(model1, original_data1, leng, scaler)
+                my_closing_price = np.array(my_closing_price)
+                valid1 = data[1500:1500 + len(my_closing_price)]
+                valid1['MyPredictions'] = my_closing_price[:, 3]
+                plt.plot(valid1['MyPredictions'], label=('MyPredictions' + str(units)))
+                plt.legend(loc='best')
 
 
 My(x_train, y_train, X_test,original_data)
