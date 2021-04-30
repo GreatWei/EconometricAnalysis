@@ -107,33 +107,33 @@ X_test = np.array(X_test)
 
 
 # create and fit the LSTM network
-# model = trainModel(x_train, y_train,132)
-#
+model = trainModel(x_train, y_train,128)
+
 # my_closing_price = predictval(model, original_data, leng, scaler)
 # my_closing_price = np.array(my_closing_price)
-# print("closing_price===========================================")
-# print(X_test.shape)
-#
-# closing_price = model.predict(X_test)
-# closing_price = np.array(closing_price)
-# closing_price = scaler.inverse_transform(closing_price)
-#
-# # print("closing_price",closing_price)
-# # print("closing_price",closing_price[:,3])
-#
-# train = data[:1500]['Close']
-# valid = data[1500:1500 + len(closing_price)]
-# valid['Predictions'] = closing_price[:, 3]
+print("closing_price===========================================")
+print(X_test.shape)
+
+closing_price = model.predict(X_test)
+closing_price = np.array(closing_price)
+closing_price = scaler.inverse_transform(closing_price)
+
+# print("closing_price",closing_price)
+# print("closing_price",closing_price[:,3])
+
+train = data[:1500]['Close']
+valid = data[1500:1500 + len(closing_price)]
+valid['Predictions'] = closing_price[:, 3]
 # valid['MyPredictions'] = my_closing_price[:, 3]
 # # plt.plot(train, label='train_Close')
-# plt.plot(valid['Close'], label='Close')
-# plt.plot(valid['Predictions'], label='Predictions')
+plt.plot(valid['Close'], label='Close')
+plt.plot(valid['Predictions'], label='Predictions')
 # plt.plot(valid['MyPredictions'], label='MyPredictions')
 # plt.legend(loc='best')
 # plt.show()
 
 
-def My(x_train, y_train, X_test):
+def My(x_train, y_train, X_test,original_data):
     # create and fit the LSTM network
     for units in range(130, 200):
         model = trainModel(x_train, y_train, units)
@@ -143,23 +143,23 @@ def My(x_train, y_train, X_test):
         print("closing_price===========================================")
         print(X_test.shape)
 
-        closing_price = model.predict(X_test)
-        closing_price = np.array(closing_price)
-        closing_price = scaler.inverse_transform(closing_price)
+        # closing_price = model.predict(X_test)
+        # closing_price = np.array(closing_price)
+        # closing_price = scaler.inverse_transform(closing_price)
 
         # print("closing_price",closing_price)
         # print("closing_price",closing_price[:,3])
 
-        train = data[:1500]['Close']
-        valid = data[1500:1500 + len(closing_price)]
-        valid['Predictions'] = closing_price[:, 3]
+        # train = data[:1500]['Close']
+        valid = data[1500:1500 + len(my_closing_price)]
+        # valid['Predictions'] = closing_price[:, 3]
         valid['MyPredictions'] = my_closing_price[:, 3]
         # plt.plot(train, label='train_Close')
-        plt.plot(valid['Close'], label='Close')
-        plt.plot(valid['Predictions'], label='Predictions')
+        # plt.plot(valid['Close'], label='Close')
+        # plt.plot(valid['Predictions'], label='Predictions')
         plt.plot(valid['MyPredictions'], label=('MyPredictions' + str(units)))
         plt.legend(loc='best')
 
 
-My(x_train, y_train, X_test)
+My(x_train, y_train, X_test,original_data)
 plt.show()
