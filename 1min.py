@@ -23,7 +23,7 @@ rcParams['figure.figsize'] = 20, 10
 from sklearn.preprocessing import MinMaxScaler
 
 
-def trainModel(x_train, y_train, units):
+def trainModel(x_train, y_train, units,epochs,batch_size):
     model = Sequential()
     # model.add(LSTM(units=150, return_sequences=True, input_shape=(x_train.shape[1], 7)))
     # model.add(LSTM(units=150))
@@ -40,7 +40,7 @@ def trainModel(x_train, y_train, units):
     # epochs=9, batch_size=13
     # epochs=9, batch_size=11
     # epochs=10, batch_size=11
-    model.fit(x_train, y_train, epochs=11, batch_size=11, verbose=2)
+    model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size, verbose=2)
     # model.save();
     print(model.summary())
     return model
@@ -138,7 +138,7 @@ def My(x_train1, y_train1, X_test1, original_data1):
     for units in range(120, 129):
         for epochs in range(7,33):
             for batch_size in range(11,33):
-                model1 = trainModel(x_train1, y_train1, units)
+                model1 = trainModel(x_train1, y_train1, units,epochs,batch_size)
                 my_closing_price = predictval(model1, original_data1, leng, scaler)
                 my_closing_price = np.array(my_closing_price)
                 valid1 = data[1500:1500 + len(my_closing_price)]
